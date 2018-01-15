@@ -37,6 +37,44 @@ return [
     /* API url 
     */
 
+    'api_url' => env('API_URL', 'http://dev.glamstudios.in/api/v1'),
+    'api_domain_url' => env('API_DOMAIN_URL', 'http://dev.glamstudios.in/api'),
+    
+	/*
+	Appointment call repeat times
+	*/
+
+	'disposition_max_attempts' => env('DISPOSITION_MAX_ATTEMPTS', 5),
+
+	/*
+	TEST MESSAGES
+	send test message on developement environment
+	*/
+
+	'send_sms' => env('SEND_SMS',true),
+
+	/*
+	TAX Rate Final including all factors
+	*/
+
+	'tax' => env('TAX',14),
+
+	/*
+	TAX Rate Final including all factors
+	*/
+
+	'sb_cess' => env('SB_CESS',0.5),
+
+	/*
+	TAX Rate Final including all factors
+	*/
+
+	'kk_cess' => env('KK_CESS',0.5),
+
+	'fb_app_id' => env('FB_APP_ID',''),
+	'google_client_id' => env('GOOGLE_CLIENT_ID',''),
+	'google_secret_key' => env('GOOGLE_SECRET_KEY',''),
+
 	/*
 	|--------------------------------------------------------------------------
 	| Application Timezone
@@ -124,6 +162,7 @@ return [
 		 */
 		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
 		'Illuminate\Auth\AuthServiceProvider',
+		// 'Ollieread\Multiauth\MultiauthServiceProvider',
 		'Illuminate\Bus\BusServiceProvider',
 		'Illuminate\Cache\CacheServiceProvider',
 		'Illuminate\Foundation\Providers\ConsoleSupportServiceProvider',
@@ -140,12 +179,13 @@ return [
 		'Illuminate\Queue\QueueServiceProvider',
 		'Illuminate\Redis\RedisServiceProvider',
 		'Illuminate\Auth\Passwords\PasswordResetServiceProvider',
+		// 'Ollieread\Multiauth\Passwords\PasswordResetServiceProvider',
 		'Illuminate\Session\SessionServiceProvider',
 		'Illuminate\Translation\TranslationServiceProvider',
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
         'Illuminate\Broadcasting\BroadcastServiceProvider',
-		'Illuminate\Html\HtmlServiceProvider',
+		'Collective\Html\HtmlServiceProvider',
 
 		/*
 		 * 3rd Party Service Providers...
@@ -156,7 +196,7 @@ return [
 		'Barryvdh\Debugbar\ServiceProvider',
         'Intervention\Image\ImageServiceProvider',
         'Maatwebsite\Excel\ExcelServiceProvider',
-        Parsidev\Entrust\EntrustServiceProvider::class,
+        Zizaco\Entrust\EntrustServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
 
 		/*
@@ -221,8 +261,8 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
 
-		'Form'      => 'Illuminate\Html\FormFacade',
-		'HTML'      => 'Illuminate\Html\HtmlFacade',
+		'Form'      => 'Collective\Html\FormFacade',
+		'HTML'      => 'Collective\Html\HtmlFacade',
 
 		/*
 		 * 3rd Party Aliases...
@@ -232,7 +272,7 @@ return [
 		'Debugbar' => 'Barryvdh\Debugbar\Facade',
         'Image' => 'Intervention\Image\Facades\Image',
         'Excel' => 'Maatwebsite\Excel\Facades\Excel',
-        'Entrust' => Parsidev\Entrust\EntrustFacade::class,
+        'Entrust' => Zizaco\Entrust\EntrustFacade::class,
 
         //Custom Helpers
         'GeneralHelper' => 'App\Helpers\GeneralHelper::class',
