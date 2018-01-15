@@ -37,44 +37,6 @@ return [
     /* API url 
     */
 
-    'api_url' => env('API_URL', 'http://dev.glamstudios.in/api/v1'),
-    'api_domain_url' => env('API_DOMAIN_URL', 'http://dev.glamstudios.in/api'),
-    
-	/*
-	Appointment call repeat times
-	*/
-
-	'disposition_max_attempts' => env('DISPOSITION_MAX_ATTEMPTS', 5),
-
-	/*
-	TEST MESSAGES
-	send test message on developement environment
-	*/
-
-	'send_sms' => env('SEND_SMS',true),
-
-	/*
-	TAX Rate Final including all factors
-	*/
-
-	'tax' => env('TAX',14),
-
-	/*
-	TAX Rate Final including all factors
-	*/
-
-	'sb_cess' => env('SB_CESS',0.5),
-
-	/*
-	TAX Rate Final including all factors
-	*/
-
-	'kk_cess' => env('KK_CESS',0.5),
-
-	'fb_app_id' => env('FB_APP_ID',''),
-	'google_client_id' => env('GOOGLE_CLIENT_ID',''),
-	'google_secret_key' => env('GOOGLE_SECRET_KEY',''),
-
 	/*
 	|--------------------------------------------------------------------------
 	| Application Timezone
