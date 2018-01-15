@@ -1,0 +1,335 @@
+@extends('app')
+@section('title') Home :: @parent @stop
+@section('content')
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="row">
+        <div class="col-md-2">
+            <h2 style='margin-top:0px;'>Dashboard</h2>
+        </div>
+        <div class="col-md-7">
+        </div>
+        <div class="col-md-3 pull-right">
+            <div class="input-group">
+                <button class="btn btn-default pull-right" id="daterange-btn">
+                    <i class="fa fa-calendar"></i> <!--Date range picke-->
+                    <span></span><i class="fa fa-caret-down"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!--<ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Dashboard</li>
+    </ol>-->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <!-- Info boxes -->
+    <!--<div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="ion">T</i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Issues Raised</span>
+                    <span class="info-box-number" style='font-size:36px;'>{{$status_data['TOTAL']}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-red"><i class="fa">P</i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Issues Pending</span>
+                    <span class="info-box-number" style='font-size:36px;'>{{$status_data['NEW']+$status_data['ASSIGNED']+$status_data['DEFERRED']}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix visible-sm-block"></div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-green"><i class="ion">C</i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Issues Completed</span>
+                    <span class="info-box-number" style='font-size:36px;'>{{$status_data['COMPLETED']}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-yellow"><i class="ion">I</i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">In Progress</span>
+                    <span class="info-box-number" style='font-size:36px;'>{{$status_data['INPROGRESS']}}</span>
+                </div>
+            </div>
+        </div>
+    </div>--><!-- /.row -->
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Timeline Chart</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <p class="text-center">
+                                <strong>Issues Filed/Closed between {{date("M d, Y",strtotime($start))}} - {{date("M d, Y",strtotime($end))}}</strong>
+                            </p>
+                            <div class="chart">
+                                <canvas id="issuesChart" height="180"></canvas>
+                            </div><!-- /.chart-responsive -->
+                        </div><!-- /.col -->
+                        <div class="col-md-4">
+                            <p class="text-center">
+                                <strong>Current Status</strong>
+                            </p>
+                            <div class="progress-group">
+                                <span class="progress-text">Total Issues Closed</span>
+                                <span class="progress-number"><b>{{$status_data['COMPLETED']}}</b>/{{$status_data['TOTAL']}}</span>
+                                <div class="progress sm">
+                                    <div class="progress-bar progress-bar-green" style="width: @if($status_data['TOTAL']==0) 0 @else {{$status_data['COMPLETED']*100/$status_data['TOTAL']}}@endif%"></div>
+                                </div>
+                            </div><!-- /.progress-group -->
+                            <div class="progress-group">
+                                <span class="progress-text">Issues in Progress</span>
+                                <span class="progress-number"><b>{{$status_data['INPROGRESS']}}</b>/{{$status_data['TOTAL']}}</span>
+                                <div class="progress sm">
+                                    <div class="progress-bar progress-bar-aqua" style="width: @if($status_data['TOTAL']==0) 0 @else {{$status_data['INPROGRESS']*100/$status_data['TOTAL']}}@endif%"></div>
+                                </div>
+                            </div><!-- /.progress-group -->
+                            <div class="progress-group">
+                                <span class="progress-text">Issues Pending</span>
+                                <span class="progress-number"><b>{{$status_data['NEW']+$status_data['ASSIGNED']}}</b>/{{$status_data['TOTAL']}}</span>
+                                <div class="progress sm">
+                                    <div class="progress-bar progress-bar-red" style="width: @if($status_data['TOTAL']==0) 0 @else {{($status_data['NEW']+$status_data['ASSIGNED'])*100/$status_data['TOTAL']}}@endif%"></div>
+                                </div>
+                            </div><!-- /.progress-group -->
+                            <div class="progress-group">
+                                <span class="progress-text">Issues Deferred</span>
+                                <span class="progress-number"><b>{{$status_data['DEFERRED']}}</b>/{{$status_data['TOTAL']}}</span>
+                                <div class="progress sm">
+                                    <div class="progress-bar progress-bar-yellow" style="width: @if($status_data['TOTAL']==0) 0 @else {{$status_data['DEFERRED']*100/$status_data['TOTAL']}}@endif%"></div>
+                                </div>
+                            </div><!-- /.progress-group -->
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- ./box-body -->
+            </div><!-- /.box -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+    
+    <!-- Main row -->
+    <div class="row">
+        <!-- Left col -->
+        <div class="col-md-6">
+            <!-- MAP & BOX PANE -->
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Issues by Village</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div id="village_issues" height="250"></div>
+                </div><!-- /.box-body -->
+            </div>            
+            <!-- TABLE: LATEST ORDERS -->
+        </div><!-- /.col -->
+        <div class="col-md-6">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Issues Types</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div id="category_issues" height="250"></div>
+                </div><!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+
+</section><!-- /.content -->
+
+@endsection
+@stop
+
+@section('styles')
+    @parent
+    <link href="/assets/site/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+@endsection
+@section('scripts')
+    @parent
+    <script src="/assets/site/js/moment.min.js" type="text/javascript"></script>
+    <script src="/assets/site/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+    <script src="/assets/site/plugins/chartjs/Chart.js" type="text/javascript"></script>
+    <script src="/assets/site/plugins/highcharts/highcharts.js"></script>
+    <!--<script src="/assets/site/js/dashboard2.js" type="text/javascript"></script>-->
+    <script>
+    $(function () {
+        
+        $('#daterange-btn').daterangepicker(
+        {
+            ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
+                    'Last 7 Days': [moment().subtract('days', 6), moment()],
+                    'Last 30 Days': [moment().subtract('days', 29), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
+            },
+            //startDate: moment().subtract('days', 29),
+            //endDate: moment()
+            startDate: moment('{{$start}}'),
+            endDate: moment('{{$end}}')
+        },
+        function (start, end) {
+            console.log(moment());
+            //$.post( '/', { 'foo' : 'bar', '_token': '<?php echo csrf_token(); ?>' }, function() {
+            //    window.location.href = '/';
+            //    });
+            window.location.href='/?start='+start.format('YYYY-MM-DD')+'&end='+end.format('YYYY-MM-DD');
+            $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        }
+        );
+
+            
+        //Date chart by ChartJS
+        var issuesChartCanvas = $("#issuesChart").get(0).getContext("2d");
+        var issuesChart = new Chart(issuesChartCanvas);
+        
+        var issuesChartData = {
+            labels: [0,{!!$date_data_x!!}],
+            datasets: [
+                {   
+                    label: "New",
+                    fillColor: "rgb(210, 214, 222)",
+                    strokeColor: "rgb(210, 214, 222)",
+                    pointColor: "rgb(210, 214, 222)",
+                    pointStrokeColor: "#c1c7d1",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgb(220,220,220)",
+                    data: [0,{!!$date_data_y_new!!}] 
+                },  
+                {   
+                    label: "Closed",
+                    fillColor: "rgba(60,141,188,0.9)",
+                    strokeColor: "rgba(60,141,188,0.8)",
+                    pointColor: "#3b8bba",
+                    pointStrokeColor: "rgba(60,141,188,1)",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(60,141,188,1)",
+                    data: [0,{!!$date_data_y_completed!!}] 
+                }   
+            ]   
+        }; 
+        
+        var issuesChartOptions = {
+            showXLabels: 10, 
+            showScale: true,
+            scaleShowGridLines: false,
+            scaleGridLineColor: "rgba(0,0,0,.05)",
+            scaleGridLineWidth: 1,
+            scaleShowHorizontalLines: true,
+            scaleShowVerticalLines: true,
+            bezierCurve: true,
+            bezierCurveTension: 0.3,
+            pointDot: false,
+            pointDotRadius: 4,
+            pointDotStrokeWidth: 1,
+            pointHitDetectionRadius: 20,
+            datasetStroke: true,
+            datasetStrokeWidth: 2,
+            datasetFill: true,
+            legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<1; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%=datasets[i].label%></li><%}%></ul>",
+            multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>",
+            maintainAspectRatio: false,
+            responsive: true
+        };
+        
+        //Create the line chart
+        issuesChart.Line(issuesChartData, issuesChartOptions);
+        
+        $('#village_issues').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: ''
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.y} ({point.percentage:.1f}%)</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Share',
+                data: [
+                    @foreach($issues_by_area as $i)
+                        ['{{$i->village_name}}', {{$i->count}}],
+                    @endforeach
+                ]
+            }]
+        });
+
+        $('#category_issues').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: ''
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.y} ({point.percentage:.1f}%)</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Share',
+                data: [
+                    @foreach($issues_by_category as $i)
+                        ['{{$i->category_name}}', {{$i->count}}],
+                    @endforeach
+                ]
+            }]
+        });
+    });
+    </script>
+@endsection

@@ -1,0 +1,86 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews
+    </IfModule>
+
+    RewriteEngine On
+
+    # Redirect Trailing Slashes...
+    RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+    # Handle Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
+Options +FollowSymlinks
+
+RewriteEngine on
+
+rewritecond %{http_host} ^glamstudios.in [nc]
+
+
+#rewriterule ^(.*)$ http://www.glamstudios.in/$1 [r=301,nc]
+
+
+RewriteCond %{HTTP_HOST} ^52\.3\.59\.30
+
+RewriteRule (.*) http://www.glamstudios.in/$1 [R=301,L]
+
+
+ErrorDocument 404 /index.php
+
+
+
+# EXPIRES CACHING ##
+
+
+<IfModule mod_expires.c>
+
+
+ExpiresActive on
+
+
+ExpiresByType image/jpg "access plus 1 month"
+
+
+ExpiresByType image/jpeg "access plus 1 month"
+
+
+ExpiresByType image/gif "access plus 1 month"
+
+
+ExpiresByType image/png "access plus 1 month"
+
+
+ExpiresByType text/css "access 1 month"
+
+
+ExpiresByType text/html "access 1 month"
+
+
+ExpiresByType application/pdf "access 1 month"
+
+
+ExpiresByType text/x-javascript "access 1 month"
+
+
+ExpiresByType application/x-shockwave-flash "access 1 month"
+
+
+ExpiresByType image/x-icon "access 1 year"
+
+
+ExpiresDefault "access 1 month"
+
+
+</IfModule>
+
+
+## EXPIRES CACHING ##
+
+
+RewriteCond %{HTTP_USER_AGENT} libwww-perl.* 
+
+
+RewriteRule .*  [F,L]
